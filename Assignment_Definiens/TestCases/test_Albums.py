@@ -1,24 +1,24 @@
 import json
 import jsonpath
 import requests
+import pytest
 
-# API URL
 
-url= "https://jsonplaceholder.typicode.com/albums"
 
-#Send the GET request
-response = requests.get(url)
-#print(response.tex)
+def test_Validate_StatusCode():
+    # Send the GET request
+    url = "https://jsonplaceholder.typicode.com/albums"
+    response = requests.get(url)
+    assert response.status_code == 200
 
-#validate Status Code
-print(response.status_code)
+def test_FetchServer():
+    url = "https://jsonplaceholder.typicode.com/albums"
+    response = requests.get(url)
+    assert response.headers.get('Server') == 'cloudflare'
 
-assert response.status_code == 200
-
-#Fetch Elapsed time
-print(response.elapsed)
-
-json_response = json.loads(response.text)
-albums = jsonpath.jsonpath(json_response, '$[:]')
-print(len(albums))
-print(albums)
+def test_CountUser():
+    url = "https://jsonplaceholder.typicode.com/albums"
+    response = requests.get(url)
+    json_response = json.loads(response.text)
+    albums = jsonpath.jsonpath(json_response, '$[:]')
+    assert len(albums) == 100

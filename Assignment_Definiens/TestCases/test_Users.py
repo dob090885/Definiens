@@ -21,5 +21,4 @@ def test_CountUser():
     response = requests.get(url)
     json_response = json.loads(response.text)
     users = jsonpath.jsonpath(json_response, '$[:]')
-    #print(len(users))
     assert len(users) == 10
